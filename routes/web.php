@@ -1,10 +1,12 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('home');
+    $courses = Course::all();
+    return view('home', get_defined_vars());
 })->name('home');
 
 Route::get('/dashboard', function () {

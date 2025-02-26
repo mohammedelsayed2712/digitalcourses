@@ -23,8 +23,21 @@
             </div>
 
             <!-- Settings Dropdown -->
+            @guest
+            <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                    {{ __('Login') }}
+                </x-nav-link>
+
+                <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                    {{ __('Register') }}
+                </x-nav-link>
+            </div>
+            @endguest
+
             @auth
             <div class="hidden sm:flex sm:items-center sm:ms-6">
+
                 <x-dropdown align="right" width="48">
                     <x-slot name="trigger">
                         <button
