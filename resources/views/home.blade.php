@@ -14,10 +14,10 @@
 
             <div class="card col-4">
                 <div class="p-6 text-gray-900">
-                    <h4>{{ $course->name }}</h4>
-                    <p>{{ $course->description }}</p>
+                    <h5>{{ $course->name }}</h5>
+                    <p class="underline">{{ $course->description }}</p>
                     <p>Price: {{ $course->price }}</p>
-                    <a href="#">Add To Cart</a>
+                    <a href="#" class='btn btn-sm btn-primary'>Add To Cart</a>
                     {{-- <a href="" class="block text-sm font-medium text-blue-500 hover:text-blue-600">
                         {{ __('View Course') }}
                         <svg class="ml-2 h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
