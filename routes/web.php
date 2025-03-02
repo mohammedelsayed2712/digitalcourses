@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Course;
@@ -13,6 +14,13 @@ Route::get('/', function () {
 // courses
 Route::controller(CourseController::class)->group(function () {
     Route::get('/courses/{course:slug}', 'show')->name('courses.show');
+});
+
+// cart
+Route::controller(CartController::class)->group(function () {
+    Route::get('/cart', 'index')->name('cart.index');
+    Route::post('/cart/{course}', 'store')->name('cart.store');
+    Route::delete('/cart/{course}', 'destroy')->name('cart.destroy');
 });
 
 Route::get('/dashboard', function () {
