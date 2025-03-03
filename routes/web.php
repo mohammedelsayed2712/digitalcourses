@@ -19,8 +19,8 @@ Route::controller(CourseController::class)->group(function () {
 // cart
 Route::controller(CartController::class)->group(function () {
     Route::get('/cart', 'index')->name('cart.index');
-    Route::post('/cart/{course}', 'store')->name('cart.store');
-    Route::delete('/cart/{course}', 'destroy')->name('cart.destroy');
+    Route::get('/addToCart/{course:slug}', 'addToCart')->name('addToCart');
+    // Route::delete('/cart/{course}', 'destroy')->name('cart.destroy');
 });
 
 Route::get('/dashboard', function () {

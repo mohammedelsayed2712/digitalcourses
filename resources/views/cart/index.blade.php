@@ -9,7 +9,24 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    Shopping Cart
+                    @if ($cart && count($cart->courses) > 0)
+                    @foreach ($cart->courses as $course)
+
+                    <div class="card">
+                        <div class="p-6 text-gray-900">
+                            <a href="{{ route('courses.show', $course) }}">
+                                <h5>{{ $course->name }}</h5>
+                            </a>
+                            <p>{{ $course->description }}</p>
+                            <p>Price: {{ $course->price }}</p>
+                            <a href="{{ route('addToCart', $course) }}" class="btn btn-sm btn-primary">Add To Cart</a>
+                        </div>
+                    </div>
+
+                    @endforeach
+                    @else
+                    <div class="alert alert-info">Cart is empty</div>
+                    @endif
                 </div>
             </div>
         </div>

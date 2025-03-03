@@ -19,7 +19,7 @@
                     </a>
                     <p>{{ $course->description }}</p>
                     <p>Price: {{ $course->price }}</p>
-                    <a href="#" class="btn btn-sm btn-primary">Add To Cart</a>
+                    <a href="{{ route('addToCart', $course) }}" class="btn btn-sm btn-primary">Add To Cart</a>
                 </div>
             </div>
 

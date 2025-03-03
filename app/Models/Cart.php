@@ -5,7 +5,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cart extends Model
 {
-    protected $guraded = [];
+    protected $guarded = [];
 
     public function courses()
     {
