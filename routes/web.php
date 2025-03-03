@@ -20,7 +20,7 @@ Route::controller(CourseController::class)->group(function () {
 Route::controller(CartController::class)->group(function () {
     Route::get('/cart', 'index')->name('cart.index');
     Route::get('/addToCart/{course:slug}', 'addToCart')->name('addToCart');
-    // Route::delete('/cart/{course}', 'destroy')->name('cart.destroy');
+    Route::get('/removeFromCart/{course:slug}', 'removeFromCart')->name('removeFromCart');
 });
 
 Route::get('/dashboard', function () {

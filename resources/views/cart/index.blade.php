@@ -15,7 +15,7 @@
                         <h6>{{ $course->name }}
                             <small class="text-primary">({{ $course->price }})</small>
                         </h6>
-                        <a href="#" class="btn btn-sm btn-danger">Remove</a>
+                        <a href="{{ route('removeFromCart', $course) }}" class="btn btn-sm btn-danger">Remove</a>
                     </div>
 
                     @endforeach

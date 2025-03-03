@@ -19,6 +19,20 @@ class CartController extends Controller
 
         $cart->courses()->syncWithoutDetaching($course);
 
-        return redirect()->route('cart.index');
+        return back();
+    }
+
+    public function removeFromCart(Course $course)
+    {
+        $cart = Cart::session()->first();
+
+        // abort_unless($cart, 404);
+        if (! $cart) {
+            return back();
+        }
+
+        $cart->courses()->detach($course);
+
+        return back();
     }
 }
