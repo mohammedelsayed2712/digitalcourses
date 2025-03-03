@@ -11,17 +11,6 @@
                 <div class="p-6 text-gray-900">
                     @if ($cart && count($cart->courses) > 0)
                     @foreach ($cart->courses as $course)
-
-                    {{-- <div class="card">
-                        <div class="p-6 text-gray-900">
-                            <a href="{{ route('courses.show', $course) }}">
-                                <h5>{{ $course->name }}</h5>
-                            </a>
-                            <p>{{ $course->description }}</p>
-                            <p>Price: {{ $course->price }}</p>
-                            <a href="{{ route('addToCart', $course) }}" class="btn btn-sm btn-primary">Add To Cart</a>
-                        </div>
-                    </div> --}}
                     <div class="bg-light p-2 mb-3 d-flex justify-content-between align-items-center">
                         <h6>{{ $course->name }}
                             <small class="text-primary">({{ $course->price }})</small>
