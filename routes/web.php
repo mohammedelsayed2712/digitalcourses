@@ -8,7 +8,7 @@ use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $cart    = Cart::where('session_id', session()->getId())->first();
+    $cart    = Cart::with('courses')->where('session_id', session()->getId())->first();
     $courses = Course::all();
     return view('home', get_defined_vars());
 })->name('home');
