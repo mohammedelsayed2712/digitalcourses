@@ -3,12 +3,10 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CourseController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Cart;
 use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    $cart    = Cart::with('courses')->where('session_id', session()->getId())->first();
     $courses = Course::all();
     return view('home', get_defined_vars());
 })->name('home');

@@ -19,7 +19,20 @@ class CustomServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // Global View
         // View::share('name', 'custom');
-        view()->share('name', 'custom');
+        // view()->share('name', 'custom');
+
+        // Composer View
+        // View::composer(
+        //     ['*'],
+        //     function ($view) {
+        //         $view->with('name', 'custom');
+        //     }
+        // );
+
+        View::composer('home', function ($view) {
+            $view->with('name', 'custom');
+        });
     }
 }
