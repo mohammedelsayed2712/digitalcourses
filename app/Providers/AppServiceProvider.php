@@ -23,7 +23,7 @@ class AppServiceProvider extends ServiceProvider
     {
 
         Facades\View::composer('*', function (View $view) {
-            $cart = Cart::with('courses')->where('session_id', session()->getId())->first();
+            $cart = Cart::session()->first();
             $view->with('cart', $cart);
         });
     }
