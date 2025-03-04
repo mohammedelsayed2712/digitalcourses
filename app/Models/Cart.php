@@ -2,6 +2,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Laravel\Cashier\Cashier;
 
 class Cart extends Model
 {
@@ -21,6 +22,6 @@ class Cart extends Model
 
     public function total()
     {
-        return $this->courses()->sum('price');
+        return Cashier::formatAmount($this->courses->sum('price'), env('CASHIER_CURRENCY'));
     }
 }

@@ -18,7 +18,7 @@
                         <h5>{{ $course->name }}</h5>
                     </a>
                     <p>{{ $course->description }}</p>
-                    <p>Price: {{ $course->price }}</p>
+                    <p>{{ $course->price() }}</p>
                     @if ($cart && $cart->courses->contains($course))
 
                     <a href="{{ route('removeFromCart', $course) }}" class="btn btn-sm btn-danger">Remove From Cart</a>

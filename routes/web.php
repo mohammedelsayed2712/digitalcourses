@@ -7,6 +7,7 @@ use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
+    // dd(Cashier::formatAmount(20000, env('CASHIER_CURRENCY')));
     $courses = Course::all();
     return view('home', get_defined_vars());
 })->name('home');
