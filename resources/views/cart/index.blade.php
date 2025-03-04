@@ -17,8 +17,14 @@
                         </h6>
                         <a href="{{ route('removeFromCart', $course) }}" class="btn btn-sm btn-danger">Remove</a>
                     </div>
-
                     @endforeach
+
+                    <div class="bg-light p-2 mb-3 d-flex justify-content-between align-items-center">
+                        <h6>Total
+                            <small class="text-primary">({{ $cart->total() }})</small>
+                        </h6>
+                        <a href="#" class="btn btn-sm btn-success">Checkout</a>
+                    </div>
                     @else
                     <div class="alert alert-info">Cart is empty</div>
                     @endif

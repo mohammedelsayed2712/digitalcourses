@@ -18,4 +18,9 @@ class Cart extends Model
     {
         return $this->belongsToMany(Course::class);
     }
+
+    public function total()
+    {
+        return $this->courses()->sum('price');
+    }
 }
