@@ -27,7 +27,7 @@ Route::controller(CartController::class)->group(function () {
 
 // Checkout
 Route::controller(CheckoutController::class)->group(function () {
-    Route::get('/checkout', 'checkout')->name('checkout');
+    Route::get('/checkout', 'checkout')->middleware('auth')->name('checkout');
 });
 
 Route::get('/dashboard', function () {

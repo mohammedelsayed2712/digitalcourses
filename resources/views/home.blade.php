@@ -7,6 +7,11 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 row">
+            @if (request('message'))
+            <div class="alert alert-success">
+                {{ request('message') }}
+            </div>
+            @endif
 
             {{-- {{ __("Home page here") }} --}}
             @if (count($courses) > 0)
