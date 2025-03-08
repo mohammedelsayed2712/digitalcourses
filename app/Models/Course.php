@@ -17,4 +17,9 @@ class Course extends Model
     {
         return Cashier::formatAmount($this->price, env('CASHIER_CURRENCY'));
     }
+
+    public function orders()
+    {
+        return $this->belongsToMany(Order::class);
+    }
 }

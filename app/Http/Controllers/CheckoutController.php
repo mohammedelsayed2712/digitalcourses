@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -31,20 +32,25 @@ class CheckoutController extends Controller
 
     public function success(Request $request)
     {
-        // dd($request->get('session_id'));
         $session = $request->user()->stripe()->checkout->sessions->retrieve($request->get('session_id'));
-        dd($session);
 
-        // $cart = Cart::find($session->metadata->cart_id);
+        if ($session->payment_status == 'paid') {
+            $cart = Cart::findOrFail($session->metadata->cart_id);
 
-        // $cart->update([
-        //     'session_id' => $session->id,
-        //     'user_id'    => $session->metadata->user_id,
-        // ]);
+            $order = Order::create([
+                'user_id' => $request->user()->id,
+            ]);
+
+            $order->courses()->attach($cart->courses->pluck('id')->toArray());
+
+            $cart->delete();
+
+            return redirect()->route('home', ['message' => 'Payment success']);
+        }
     }
 
-    public function cancel()
+    public function cancel(Request $request)
     {
-        return view('checkout.cancel');
+        $session = $request->user()->stripe()->checkout->sessions->retrieve($request->get('session_id'));
     }
 }
