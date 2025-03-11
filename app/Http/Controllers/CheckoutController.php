@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 
 class CheckoutController extends Controller
 {
+    // checkout() initializes a Stripe checkout session and redirects the user to Stripe's payment page.
     public function checkout()
     {
         $cart   = Cart::session()->first();
@@ -30,6 +31,21 @@ class CheckoutController extends Controller
         return Auth::user()->checkout($prices, $sessionOptions, $customerOptions);
     }
 
+    public function enableCoupons()
+    {
+        $cart   = Cart::session()->first();
+        $prices = $cart->courses->pluck('stripe_price_id')->toArray();
+
+        $sessionOptions = [
+            'success_url'           => route('home', ['message' => 'Payment success']),
+            'cancel_url'            => route('home', ['message' => 'Payment canceled']),
+            'allow_promotion_codes' => true,
+        ];
+
+        return Auth::user()->checkout($prices, $sessionOptions);
+    }
+
+    // success() confirms payment, creates an order, assigns courses to the order, and deletes the cart.
     public function success(Request $request)
     {
         $session = $request->user()->stripe()->checkout->sessions->retrieve($request->get('session_id'));
@@ -49,6 +65,7 @@ class CheckoutController extends Controller
         }
     }
 
+    // cancel() retrieves the Stripe session when a checkout is canceled but does nothing further.
     public function cancel(Request $request)
     {
         $session = $request->user()->stripe()->checkout->sessions->retrieve($request->get('session_id'));

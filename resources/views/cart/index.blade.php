@@ -23,7 +23,7 @@
                         <h6>Total
                             <small class="text-primary">({{ $cart->total() }})</small>
                         </h6>
-                        <a href="{{ route('checkout') }}" class="btn btn-sm btn-success">Checkout</a>
+                        <a href="{{ route('checkout.enableCoupons') }}" class="btn btn-sm btn-success">Checkout</a>
                     </div>
                     @else
                     <div class="alert alert-info">Cart is empty</div>
