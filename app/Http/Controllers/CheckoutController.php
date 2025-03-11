@@ -37,12 +37,16 @@ class CheckoutController extends Controller
         $prices = $cart->courses->pluck('stripe_price_id')->toArray();
 
         $sessionOptions = [
-            'success_url'           => route('home', ['message' => 'Payment success']),
-            'cancel_url'            => route('home', ['message' => 'Payment canceled']),
-            'allow_promotion_codes' => true,
+            'success_url' => route('home', ['message' => 'Payment success']),
+            'cancel_url'  => route('home', ['message' => 'Payment canceled']),
+            // 'allow_promotion_codes' => true,
         ];
 
-        return Auth::user()->checkout($prices, $sessionOptions);
+        return Auth::user()
+        // ->allowPromotionCodes()
+        // ->withCoupon('pCfmp7hD')
+            ->withPromotionCode('promo_1R1ILK2KxKhpsanMor0BHwrT')
+            ->checkout($prices, $sessionOptions);
     }
 
     // success() confirms payment, creates an order, assigns courses to the order, and deletes the cart.
