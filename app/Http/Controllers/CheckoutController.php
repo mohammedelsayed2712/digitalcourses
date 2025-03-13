@@ -78,13 +78,16 @@ class CheckoutController extends Controller
     public function nonStripeProducts()
     {
         $cart   = Cart::session()->first();
-        $prices = $cart->courses->pluck('stripe_price_id')->toArray();
+        $amount = $cart->courses->sum('price');
+        // dd($amount);
+        $name = $cart->courses->pluck('name')->implode(', ');
+        // dd($name);
 
         $sessionOptions = [
             'success_url' => route('home', ['message' => 'Payment success']),
             'cancel_url'  => route('home', ['message' => 'Payment canceled']),
         ];
 
-        return Auth::user()->checkout($prices, $sessionOptions);
+        return Auth::user()->checkoutCharge($amount, $name, 1, $sessionOptions);
     }
 }
