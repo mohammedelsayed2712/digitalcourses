@@ -3,6 +3,7 @@
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\PaymentMethodCheckoutController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Course;
 use Illuminate\Support\Facades\Route;
@@ -34,6 +35,11 @@ Route::controller(CheckoutController::class)->group(function () {
     Route::get('/checkout/guest', 'guest')->name('checkout.guest');
     Route::get('/checkout/success', 'success')->middleware('auth')->name('checkout.success');
     Route::get('/checkout/cancel', 'cancel')->middleware('auth')->name('checkout.cancel');
+});
+
+// Direct Integration - Payment methods
+Route::controller(PaymentMethodCheckoutController::class)->group(function () {
+    Route::get('/direct/paymentMethod', 'index')->middleware('auth')->name('direct.paymentMethod');
 });
 
 Route::get('/dashboard', function () {
