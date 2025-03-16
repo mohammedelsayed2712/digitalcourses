@@ -9,13 +9,14 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form action="#" method="POST">
+                    <form action="{{ route('direct.paymentMethod.post') }}" method="POST" id="form">
                         @csrf
 
+                        <input type="hidden" name="payment_method" id="payment_method">
                         <!-- Stripe Elements Placeholder -->
                         <div id="card-element"></div>
 
-                        <button id="card-button" class="btn btn-sm btn-primary mt-3">
+                        <button type="button" id="card-button" class="btn btn-sm btn-primary mt-3">
                             Process Payment
                         </button>
                     </form>
@@ -25,11 +26,31 @@
     </div>
 
     <script>
-        const stripe = Stripe('pk_test_51QwRjF2KxKhpsanMk3hRPVLC373m6wMoh1l7y0K8OwBstnD3ypbti77ZmIMsLVSzn1no6Ot9QLzRH1kPWz5Nxow500TAM4tbtL');
-     
+        // Initialize Stripe
+        const stripe = Stripe(@json(env('STRIPE_KEY')));
         const elements = stripe.elements();
         const cardElement = elements.create('card');
-     
         cardElement.mount('#card-element');
+
+
+        // Handle Payment Process
+        document.getElementById('card-button').addEventListener('click', async (e) => {
+            const { 
+                paymentMethod,
+                error 
+            } = await stripe.createPaymentMethod(
+                'card', cardElement
+            );
+
+            if (error) {
+                // alert('error');
+                console.error(error);
+            } else {
+                // alert('success');
+                console.error(paymentMethod);
+                document.getElementById('payment_method').value = paymentMethod.id;
+                document.getElementById('form').submit();
+            }
+        });
     </script>
 </x-app-layout>
