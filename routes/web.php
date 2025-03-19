@@ -41,6 +41,7 @@ Route::controller(CheckoutController::class)->group(function () {
 Route::controller(PaymentMethodCheckoutController::class)->group(function () {
     Route::get('/direct/paymentMethod', 'index')->middleware('auth')->name('direct.paymentMethod');
     Route::post('/direct/paymentMethod/post', 'post')->middleware('auth')->name('direct.paymentMethod.post');
+    Route::get('/direct/paymentMethod/oneClick', 'oneClick')->middleware('auth')->name('direct.paymentMethod.oneClick');
 });
 
 Route::get('/dashboard', function () {
