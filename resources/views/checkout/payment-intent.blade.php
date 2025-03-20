@@ -35,23 +35,28 @@
 
 
         // Handle Payment Process
-        document.getElementById('card-button').addEventListener('click', async (e) => {
-            const { 
-                paymentMethod,
-                error 
-            } = await stripe.createPaymentMethod(
-                'card', cardElement
-            );
+        const cardButton = document.getElementById('card-button');
+        const clientSecret = cardButton.dataset.secret;
 
+        cardButton.addEventListener('click', async (e) => {
+        const { paymentIntent, error } = await stripe.confirmCardPayment(
+            clientSecret, {
+                payment_method: {
+                    card: cardElement
+                }
+            }
+            );
+        
             if (error) {
-                // alert('error');
+                alert('error');
                 console.error(error);
             } else {
-                // alert('success');
-                console.error(paymentMethod);
-                document.getElementById('payment_method').value = paymentMethod.id;
-                document.getElementById('form').submit();
+                alert('success');
+                console.error(paymentIntent);
+                // document.getElementById('payment_method').value = paymentMethod.id;
+                // document.getElementById('form').submit();
             }
         });
+
     </script>
 </x-app-layout>
