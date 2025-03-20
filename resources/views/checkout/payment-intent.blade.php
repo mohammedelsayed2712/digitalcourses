@@ -16,7 +16,8 @@
                         <!-- Stripe Elements Placeholder -->
                         <div id="card-element"></div>
 
-                        <button type="button" id="card-button" class="btn btn-sm btn-primary mt-3">
+                        <button type="button" id="card-button" class="btn btn-sm btn-primary mt-3"
+                            data-secret="{{ $payment->client_secret }}">
                             Process Payment
                         </button>
                     </form>

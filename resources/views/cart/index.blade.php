@@ -29,7 +29,7 @@
                                 Click
                                 Checkout</a>
                             @endif
-                            <a href="{{ route('direct.paymentMethod') }}" class="btn btn-sm btn-success">Checkout</a>
+                            <a href="{{ route('direct.paymentIntent') }}" class="btn btn-sm btn-success">Checkout</a>
                         </div>
                     </div>
                     @else
