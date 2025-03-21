@@ -6,6 +6,7 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\PaymentIntentController;
 use App\Http\Controllers\PaymentMethodCheckoutController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SetupIntentController;
 use App\Models\Course;
 use Illuminate\Support\Facades\Route;
 
@@ -49,6 +50,12 @@ Route::controller(PaymentMethodCheckoutController::class)->group(function () {
 Route::controller(PaymentIntentController::class)->group(function () {
     Route::get('/direct/paymentIntent', 'index')->middleware('auth')->name('direct.paymentIntent');
     Route::post('/direct/paymentIntent/post', 'post')->middleware('auth')->name('direct.paymentIntent.post');
+});
+
+// Direct Integration - Setup Intent
+Route::controller(SetupIntentController::class)->group(function () {
+    Route::get('/direct/setupIntent', 'index')->middleware('auth')->name('direct.setupIntent');
+    Route::post('/direct/setupIntent/post', 'post')->middleware('auth')->name('direct.setupIntent.post');
 });
 
 Route::get('/dashboard', function () {
