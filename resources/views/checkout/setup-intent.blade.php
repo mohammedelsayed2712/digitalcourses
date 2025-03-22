@@ -12,7 +12,7 @@
                     <form action="{{ route('direct.setupIntent.post') }}" method="POST" id="form">
                         @csrf
 
-                        <input type="hidden" name="payment_intent_id" id="payment_intent_id">
+                        <input type="hidden" name="payment_method" id="payment_method">
                         <!-- Stripe Elements Placeholder -->
                         <div id="card-element"></div>
 
@@ -53,7 +53,7 @@
             } else {
                 alert('success');
                 console.error(setupIntent);
-                document.getElementById('payment_intent_id').value = paymentIntent.id;
+                document.getElementById('payment_method').value = setupIntent.payment_method;
                 document.getElementById('form').submit();
             }
         });

@@ -11,20 +11,23 @@ class SetupIntentController extends Controller
     public function index()
     {
         $setupIntent = auth()->user()->createSetupIntent();
-        dd($setupIntent);
+        // dd($setupIntent);
 
         return view('checkout.setup-intent', get_defined_vars());
     }
 
     public function post(Request $request)
     {
-        $cart   = Cart::session()->first();
-        $amount = Cart::session()->first()->courses->sum('price');
+        $cart          = Cart::session()->first();
+        $amount        = $cart->courses->sum('price');
+        $paymentMethod = $request->payment_method;
 
-        $paymentIntentId = $request->payment_intent_id;
-        $paymentIntent   = Auth::user()->findPayment($paymentIntentId);
+        Auth::user()->createOrGetStripeCustomer();
+        $payment = Auth::user()->charge($amount, $paymentMethod, [
+            'return_url' => route('home', ['message' => 'Payment successful!']),
+        ]);
 
-        if ($paymentIntent->status == 'succeeded') {
+        if ($payment->status == 'succeeded') {
             $order = Order::create([
                 'user_id' => Auth::user()->id,
             ]);
