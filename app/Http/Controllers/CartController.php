@@ -1,8 +1,10 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Cart;
 use App\Models\Course;
+use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
@@ -15,7 +17,7 @@ class CartController extends Controller
     {
         $cart = Cart::firstOrCreate([
             'session_id' => session()->getId(),
-            'user_id'    => auth()->user() ? auth()->user()->id : null,
+            'user_id' => auth()->user() ? auth()->user()->id : null,
         ]);
 
         $cart->courses()->syncWithoutDetaching($course);
@@ -27,11 +29,8 @@ class CartController extends Controller
     {
         $cart = Cart::session()->first();
 
-        // abort_unless($cart, 404);
-        if (! $cart) {
-            return back();
-        }
-
+        abort_unless($cart, 404);
+        
         $cart->courses()->detach($course);
 
         return back();

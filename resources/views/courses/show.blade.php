@@ -7,15 +7,13 @@
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-
             <div class="card">
                 <div class="p-6 text-gray-900">
                     <h5>{{ $course->name }}</h5>
                     <p class="underline">{{ $course->description }}</p>
-                    <p>Price: {{ $course->price }}</p>
+                    <p>{{ $course->price }}</p>
                 </div>
             </div>
-
         </div>
     </div>
 </x-app-layout>

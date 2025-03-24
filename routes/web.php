@@ -1,30 +1,32 @@
 <?php
 
+use App\Models\Cart;
+use App\Models\Course;
+use Laravel\Cashier\Cashier;
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CartController;
-use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CourseController;
+use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\WebhookController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\SetupIntentController;
 use App\Http\Controllers\PaymentIntentController;
 use App\Http\Controllers\PaymentMethodCheckoutController;
-use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\SetupIntentController;
-use App\Models\Course;
-use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    // dd(Cashier::formatAmount(20000, env('CASHIER_CURRENCY')));
     $courses = Course::all();
     return view('home', get_defined_vars());
 })->name('home');
 
-// courses
+// Courses
 Route::controller(CourseController::class)->group(function () {
     Route::get('/courses/{course:slug}', 'show')->name('courses.show');
 });
 
-// cart
+// Cart Management
 Route::controller(CartController::class)->group(function () {
     Route::get('/cart', 'index')->name('cart.index');
-    Route::get('/addToCart/{course:slug}', 'addToCart')->name('addToCart');
+    Route::get('/addToCart/{course:slug}', 'addtoCart')->name('addtoCart');
     Route::get('/removeFromCart/{course:slug}', 'removeFromCart')->name('removeFromCart');
 });
 
@@ -39,24 +41,38 @@ Route::controller(CheckoutController::class)->group(function () {
     Route::get('/checkout/cancel', 'cancel')->middleware('auth')->name('checkout.cancel');
 });
 
-// Direct Integration - Payment methods
+
+
+
+
+
+// Direct Integration - Payment Method
 Route::controller(PaymentMethodCheckoutController::class)->group(function () {
-    Route::get('/direct/paymentMethod', 'index')->middleware('auth')->name('direct.paymentMethod');
-    Route::post('/direct/paymentMethod/post', 'post')->middleware('auth')->name('direct.paymentMethod.post');
-    Route::get('/direct/paymentMethod/oneClick', 'oneClick')->middleware(['auth', 'protectOneClickCheckout'])->name('direct.paymentMethod.oneClick');
+    Route::get('/direct/paymentMethod', 'index')->middleware('auth')->name('direct.paymentMethod');    
+    Route::post('/direct/paymentMethod/post', 'post')->middleware('auth')->name('direct.paymentMethod.post');    
+    Route::get('/direct/paymentMethod/oneClick', 'oneClick')->middleware(['auth', 'protectOneClickCheckout'])->name('direct.paymentMethod.oneClick');    
 });
+
 
 // Direct Integration - Payment Intent
 Route::controller(PaymentIntentController::class)->group(function () {
-    Route::get('/direct/paymentIntent', 'index')->middleware('auth')->name('direct.paymentIntent');
-    Route::post('/direct/paymentIntent/post', 'post')->middleware('auth')->name('direct.paymentIntent.post');
+    Route::get('/direct/paymentIntent', 'index')->middleware('auth')->name('direct.paymentIntent');    
+    Route::post('/direct/paymentIntent/post', 'post')->middleware('auth')->name('direct.paymentIntent.post');  
 });
 
-// Direct Integration - Setup Intent
+
+// Direct Integration - setup Intent
 Route::controller(SetupIntentController::class)->group(function () {
-    Route::get('/direct/setupIntent', 'index')->middleware('auth')->name('direct.setupIntent');
-    Route::post('/direct/setupIntent/post', 'post')->middleware('auth')->name('direct.setupIntent.post');
+    Route::get('/direct/setupIntent', 'index')->middleware('auth')->name('direct.setupIntent');    
+    Route::post('/direct/setupIntent/post', 'post')->middleware('auth')->name('direct.setupIntent.post');  
 });
+
+
+
+Route::post('stripe/webhook', [WebhookController::class, 'handleWebhook'])->name('cashier.webhook');
+
+
+
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -68,4 +84,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

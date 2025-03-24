@@ -9,14 +9,15 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900">
-                    <form action="{{ route('direct.paymentMethod.post') }}" method="POST" id="form">
+                    <form action="{{ route('direct.paymentMethod.post') }}" method="post" id="form">
                         @csrf
 
                         <input type="hidden" name="payment_method" id="payment_method">
+
                         <!-- Stripe Elements Placeholder -->
                         <div id="card-element"></div>
 
-                        <button type="button" id="card-button" class="btn btn-sm btn-primary mt-3">
+                        <button id="card-button" class="btn btn-sm btn-primary mt-3" type="button">
                             Process Payment
                         </button>
                     </form>
@@ -32,24 +33,25 @@
         const cardElement = elements.create('card');
         cardElement.mount('#card-element');
 
-
-        // Handle Payment Process
+        // Handle Payment
         document.getElementById('card-button').addEventListener('click', async (e) => {
-            const { 
+            const {
                 paymentMethod,
-                error 
+                error
             } = await stripe.createPaymentMethod(
                 'card', cardElement
             );
 
             if (error) {
-                // alert('error');
-                console.error(error);
+                alert('error');
+                console.log(error);
+                // Display "error.message" to the user...
             } else {
-                // alert('success');
-                console.error(paymentMethod);
+                alert('success');
+                console.log(paymentMethod);
                 document.getElementById('payment_method').value = paymentMethod.id;
                 document.getElementById('form').submit();
+                // The card has been verified successfully...
             }
         });
     </script>

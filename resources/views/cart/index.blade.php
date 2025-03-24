@@ -11,7 +11,7 @@
                 <div class="p-6 text-gray-900">
                     @if ($cart && count($cart->courses) > 0)
                     @foreach ($cart->courses as $course)
-                    <div class="bg-light p-2 mb-3 d-flex justify-content-between align-items-center">
+                    <div class="bg-light mb-3 p-2 d-flex justify-content-between align-items-center">
                         <h6>{{ $course->name }}
                             <small class="text-primary">({{ $course->price() }})</small>
                         </h6>
@@ -19,7 +19,7 @@
                     </div>
                     @endforeach
 
-                    <div class="bg-light p-2 mb-3 d-flex justify-content-between align-items-center">
+                    <div class="bg-light mb-3 p-2 d-flex justify-content-between align-items-center">
                         <h6>Total
                             <small class="text-primary">({{ $cart->total() }})</small>
                         </h6>
@@ -29,11 +29,11 @@
                                 Click
                                 Checkout</a>
                             @endif
-                            <a href="{{ route('direct.setupIntent') }}" class="btn btn-sm btn-success">Checkout</a>
+                            <a href="{{ route('direct.paymentMethod') }}" class="btn btn-sm btn-success">Checkout</a>
                         </div>
                     </div>
                     @else
-                    <div class="alert alert-info">Cart is empty</div>
+                    <div class="alert alert-info">Your Cart Is Empty</div>
                     @endif
                 </div>
             </div>
